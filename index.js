@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const usersRouter = require("./routes/users");
+const usersRekomendasiRouter = require("./routes/usersRekomendasi");
 
 
 app.use(express.json());
@@ -16,6 +17,8 @@ app.get("/", (req, res) => {
 
 
 app.use("/users", usersRouter);
+app.use("/users/rekomendasi", usersRekomendasiRouter);
+
 
 /* Error handler middleware */
 app.use((err, req, res, next) => {

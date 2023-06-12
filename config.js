@@ -1,10 +1,12 @@
+const dotenv = require("dotenv").config();
+
 const config = {
   db: {
     /* don't expose password or any sensitive info, done only for demo */
-    host: "34.101.204.85",
-    user: "root",
-    password: "12345678",
-    database: "virtual_try_on",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
   },
   listPerPage: 10,
 };

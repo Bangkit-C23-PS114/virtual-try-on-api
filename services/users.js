@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt")
 
 async function allUsers() {
   const rows = await db.query(
-    `SELECT id, name, email FROM users`
+    `SELECT id, name, email FROM Users`
   );
   const data = helper.emptyOrRows(rows);
   return  {
@@ -17,7 +17,7 @@ async function allUsers() {
 async function authenticate({ email, password }) {
   //check if user exists
   const users = await db.query(
-    `SELECT id, name, email, password FROM users WHERE email = ?`,
+    `SELECT id, name, email, password FROM Users WHERE email = ?`,
     [email]
   );
 
@@ -40,7 +40,7 @@ async function authenticate({ email, password }) {
 async function register({ name, email, password }) {
   //check if user exists
   const users = await db.query(
-    `SELECT id, name, email, password FROM users WHERE email = ?`,
+    `SELECT id, name, email, password FROM Users WHERE email = ?`,
     [email]
   );
 
@@ -52,7 +52,7 @@ async function register({ name, email, password }) {
 
   //register user
   const result = await db.query(
-    `INSERT INTO users (name, email, password) VALUES (?, ?, ?)`,
+    `INSERT INTO Users (name, email, password) VALUES (?, ?, ?)`,
     [name, email, hashedPassword]
   );
 
