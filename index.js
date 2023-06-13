@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 
 
 app.use("/users", usersRouter);
-app.use("/users/rekomendasi", usersRekomendasiRouter);
+app.use("/users", usersRekomendasiRouter);
 
 
 /* Error handler middleware */

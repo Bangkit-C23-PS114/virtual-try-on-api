@@ -53,7 +53,7 @@ async function register({ firstName, lastName, email, password }) {
 
   //register user
   const result = await db.query(
-    `INSERT INTO Users (firstName, lastName, email, password) VALUES (?, ?, ?, ?)`,
+    `INSERT INTO users (firstName, lastName, email, password) VALUES (?, ?, ?, ?)`,
     [firstName, lastName, email, hashedPassword]
   );
 
