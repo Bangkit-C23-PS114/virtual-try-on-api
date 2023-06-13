@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt")
 
 async function allUsers() {
   const rows = await db.query(
-    `SELECT id, firstName, lastName, email FROM users`
+    `SELECT id, firstName, lastName, CONCAT(firstName, ' ', lastName) AS fullName, email FROM users`
   );
   const data = helper.emptyOrRows(rows);
   return  {
@@ -13,11 +13,21 @@ async function allUsers() {
   }
 }
 
+async function getUser({ id }) {
+  const rows = await db.query(
+    `SELECT id, firstName, lastName, CONCAT(firstName, ' ', lastName) AS fullName, email FROM users WHERE id = ?`,
+    [id]
+  );
+  const data = helper.emptyOrRows(rows);
+  return  {
+    data
+  }
+}
 
 async function authenticate({ email, password }) {
   //check if user exists
   const users = await db.query(
-    ` SELECT id, email, password FROM users
+    ` SELECT id, firstName, lastName, CONCAT(firstName, ' ', lastName) AS fullName, email, password FROM users
       WHERE email = ?`,
     [email]
   );
@@ -31,10 +41,12 @@ async function authenticate({ email, password }) {
     if (err) throw err;
   });
 
+  const data = helper.emptyOrRows(users);
   const message = 'Authentication successful';
   
   return {
     message,
+    data
   }
 }
 
@@ -56,16 +68,24 @@ async function register({ firstName, lastName, email, password }) {
     `INSERT INTO users (firstName, lastName, email, password) VALUES (?, ?, ?, ?)`,
     [firstName, lastName, email, hashedPassword]
   );
+  
+  const user = await db.query(
+    `SELECT id, firstName, lastName, CONCAT(firstName, ' ', lastName) AS fullName, email FROM users WHERE email = ?`,
+    [email]
+  );
 
+  const data = helper.emptyOrRows(user);
   const message = 'User created';
 
   return {
     message,
+    data
   }
 }
 
 module.exports = {
   authenticate,
+  getUser,
   allUsers,
   register
 }

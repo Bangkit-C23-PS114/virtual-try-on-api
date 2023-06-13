@@ -14,6 +14,18 @@ router.get('/', async function (req, res, next) {
 });
 
 
+//get user by id
+router.get('/:id', async function (req, res, next) {
+  try {
+    res.json(await users.getUser(req.params.id));
+  }
+  catch (err) {
+    console.error(`Error while getting user `, err.message);
+    next(err);
+  }
+});
+
+
 //authenticate user
 router.post('/authenticate', async function (req, res, next) {
   try {
