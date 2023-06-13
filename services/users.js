@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt")
 
 async function allUsers() {
   const rows = await db.query(
-    `SELECT id, name, email FROM Users`
+    `SELECT id, firstName, lastName, email FROM users`
   );
   const data = helper.emptyOrRows(rows);
   return  {
@@ -17,7 +17,8 @@ async function allUsers() {
 async function authenticate({ email, password }) {
   //check if user exists
   const users = await db.query(
-    `SELECT id, name, email, password FROM Users WHERE email = ?`,
+    ` SELECT id, email, password FROM users
+      WHERE email = ?`,
     [email]
   );
 
@@ -37,10 +38,10 @@ async function authenticate({ email, password }) {
   }
 }
 
-async function register({ name, email, password }) {
+async function register({ firstName, lastName, email, password }) {
   //check if user exists
   const users = await db.query(
-    `SELECT id, name, email, password FROM Users WHERE email = ?`,
+    `SELECT id, email, password FROM users WHERE email = ?`,
     [email]
   );
 
@@ -52,8 +53,8 @@ async function register({ name, email, password }) {
 
   //register user
   const result = await db.query(
-    `INSERT INTO Users (name, email, password) VALUES (?, ?, ?)`,
-    [name, email, hashedPassword]
+    `INSERT INTO Users (firstName, lastName, email, password) VALUES (?, ?, ?, ?)`,
+    [firstName, lastName, email, hashedPassword]
   );
 
   const message = 'User created';
