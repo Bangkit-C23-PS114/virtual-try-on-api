@@ -29,8 +29,8 @@ router.post('/authenticate', async function (req, res, next) {
 //register user
 router.post('/register', async function (req, res, next) {
   try {
-    const { name, email, password } = req.body;
-    const user = await users.register({ name, email, password });
+    const { firstName, lastName, email, password } = req.body;
+    const user = await users.register({ firstName, lastName, email, password });
     res.json(user);
   } catch (err) {
     console.error(`Error while registering user`, err.message);
