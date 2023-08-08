@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/tasks"></script>
+  <script type="text/javascript">
+
+  async function main() {
+    const model3 = await tfTask.ImageClassification.CustomModel.TFLite.load({
+    model: '../assets/user_img_enc.tflite',
+  });
+
+  const result3 = await model3.predict('../assets/IMG_20200229_150417.jpg');
+  console.log(result3);
+  }
+  </script>
+</head>
+<body>
+  asdasdas
+</body>
+</html>
