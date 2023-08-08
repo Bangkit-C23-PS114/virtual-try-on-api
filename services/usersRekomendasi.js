@@ -25,7 +25,7 @@ async function getRekomendasi({ userId, id }) {
 }
 
 async function createRekomendasi({ userId,  fileUrl }) {
-
+  console.log(userId, fileUrl)
   const result = await db.query(
     `INSERT INTO usersRekomendasi (userId,  fileUrl) VALUES (?, ?)`,
     [userId, fileUrl]

@@ -1,18 +1,25 @@
 const express = require("express");
+const expressLayouts =require('express-ejs-layouts')
 const app = express();
 const usersRouter = require("./routes/users");
 const usersRekomendasiRouter = require("./routes/usersRekomendasi");
 
 
 app.use(express.json());
+app.set('view engine','ejs')
+app.use(express.static('public'))
 app.use(
   express.urlencoded({
     extended: true,
   })
 );
+
+
 app.get("/", (req, res) => {
-  res.json({ message: "ok" });
+  res.render("index", { title: "Express" });
 });
+
+
 
 
 app.use("/users", usersRouter);
